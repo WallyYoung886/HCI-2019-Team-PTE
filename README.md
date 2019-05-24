@@ -1,8 +1,8 @@
 # HCI-2019-Team-PTE
 A hign fidelity prototype for Human Computer Interaction Report 3
 <h3>Brief</h3>
-<p>This is an application prototype called Foundit, designed to help people find items that are unknown or unknown.
-The application is written in HTML, CSS and JavaScript, because it was originally designed for mobile phones, and because of the development time limitation, it only adapts to the resolution configuration of the mobile phone. For the best experience, please view the app in the resolution of iPhone 6/7/8.</p>
+<p>This is an application prototype called Foundit, designed to help people find items that are unknown for name or unknown for where-to-buy.</p>
+<p>The application is written in HTML, CSS and JavaScript, because it was originally designed for mobile phones, and because of the development time limitation, it only adapts to the resolution configuration of the mobile phone. For the best experience, please view the app in the resolution of iPhone 6/7/8.</p>
 
 <p>To run the application, you need to access the login.html for start.This application does not have a backend. It is only used for testing on a single machine. It does not save the password. The user name only saves the last registered user name. It only validates the password input consistency as a process. Only the user name is verified when logging in. This application mainly uses localstorage as the way of data storage, and uses data.js as the basic data for initialization. The app resets the data each time a new user is registered, resulting in the same test results between different testers. This app uses localstorage to store the two most recent pictures from two differentsearch modes, drawing search and image search, to give users the highest possible fidelity test experience.This also has the side effect that <strong> the application must be loaded on the virtual server to use the image search function, otherwise it will not be available due to image storage errors.</strong></p>
 
