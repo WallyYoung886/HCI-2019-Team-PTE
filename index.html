@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="x5-fullscreen" content="true">
+    <title>Foundit! - a search app</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <section>
+            <img src="imgs/bell-solid.png" alt="notifications" id="bell-btn">
+            <h2 id="nav-title">Home</h2>
+            <a href="settings.html"><img src="imgs/setting-solid.png" alt="setting" id="set-btn"></a>
+        </section>
+        <section id="notification-float" class="float-noti">
+            <div>
+                <p>You have no new message.</p>
+            </div>
+        </section>
+    </header>
+
+    <section id="home-page" class="active">
+        <a href="drawing.html">
+            <img src="imgs/draw-search.png" alt="draw-search">
+            <p>Drawing Search</p>
+        </a>
+        <a href="imageSearch.html">
+            <img src="imgs/pic-search.png" alt="pic-search">
+            <p>Photo Search</p>
+        </a>
+        <a href="text-search.html">
+            <img src="imgs/text-search.png" alt="text-search">
+            <p>Text Search</p>
+        </a>
+    </section>
+
+    <section id="community" class="active">
+        <input type="text" placeholder="search..." id="search-btn">
+        <main id="commu-body" class="reverse">
+            <div class="blank"></div>
+        </main>
+    </section>
+
+    <section id="history" class="active">
+        <header>
+            <h4 id="myfin">My findings</h4>
+            <h4 class="hi-li" id="mycom">My comments</h4>
+        </header>
+        <section id="my-finding">
+
+        </section>
+        <section id="my-comment">
+
+        </section>
+    </section>
+
+    <nav class="nav">
+        <img src="imgs/home-hi.png" alt="home" id="home-button">
+        <img src="imgs/commu.png" alt="community" id="commu-button">
+        <img src="imgs/history.png" alt="history" id="history-button">
+    </nav>
+
+    <script src="js/jquery-3.4.0.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>

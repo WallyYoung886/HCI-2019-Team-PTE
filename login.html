@@ -1,0 +1,121 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="x5-fullscreen" content="true">
+    <title>Foundit - login</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <section id="log-page">
+        <img src="imgs/logo.png" alt="mainlogo">
+        <h1>Welcome to Foundit</h1>
+        <p>An app helps you find items quickly and accuratly</p>
+        <form action="index.html" method="get" id="real-log-form">
+            <div>
+                    <label for="username-log">User name:</label>
+                    <input type="text" name="username-log" id="username-log">
+                </div>
+            
+                <div>
+                    <label for="password-log">Password:</label>
+                    <input type="password" name="password-log" id="password-log">
+                </div>
+            
+                <div>
+                    <button type="button" id="sign-up-btn">Sign up</button>
+                    <button type="button" id="log-btn">Log in</button>
+                </div>
+        </form>
+        <form action="index.html" method="Get" id="log-form">
+            <div>
+                <label for="username">User name:</label>
+                <input type="text" name="username" id="username">
+            </div>
+            <div>
+                <label for="skill">Skill Field:</label>
+                <input type="text" name="skill" id="skill">
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password">
+            </div>
+            <div>
+                <label for="password2">Password again:</label>
+                <input type="password" name="password2" id="password2">
+            </div>
+            <div>
+                <button type="button" id="return-btn">Back</button>
+                <button type="submit" id="sub-btn">Submit</button>
+            </div>
+        </form>
+        <p style="width:65%;"><a href="https://docs.google.com/forms/d/e/1FAIpQLSc8RdsUBHk5S9du7bKKPLKqMJlOoX8veb4rhrUQgW7QeIUv_Q/viewform" style="color: white; text-decoration: underline;text-align: left;">Click for TAM</a></p>
+        
+    </section>
+
+    <script src="js/jquery-3.4.0.min.js"></script>
+    <script src="js/data.js"></script>
+    <script>
+        $(document).ready(function(){
+
+            $("#log-form").hide();
+
+            $("#log-btn").click(function(e){
+                e.preventDefault();
+                let username = $("#username-log").val();
+                if(username == localStorage.getItem("username")){
+                    window.location.href="index.html";
+                }
+                else {
+                    $("#username-log").addClass("red");
+                    $("#password-log").addClass("red");
+                }
+            });
+
+            $("#sign-up-btn").click(function(e){
+                e.preventDefault();
+                $("#log-form").show();
+                $("#real-log-form").hide();
+            });
+
+            $("#return-btn").click(function(e){
+                e.preventDefault();
+                $("#log-form").hide();
+                $("#real-log-form").show();
+            });
+
+            $("#sub-btn").click(function(e){
+                e.preventDefault();
+
+                let username = $("#username").val();
+                let skill = $("#skill").val();
+                let p1=$("#password").val();
+                let p2=$("#password2").val();
+
+                if(p1==p2 && p1!="" && username!=""){
+                    localStorage.setItem("username",username);
+                    localStorage.setItem("skill",skill);
+                    localStorage.setItem("founditData",JSON.stringify(commudata));
+                    localStorage.setItem("founditHistory",JSON.stringify(myfindings));
+                    localStorage.setItem("founditComment",JSON.stringify(mycomments));
+                    localStorage.setItem("posted",false);
+                    localStorage.setItem("visited",false);
+                    window.location.href="index.html";
+                }
+                else{
+                    $("#password").addClass("red");
+                    $("#password2").addClass("red");
+                    $("#sub-btn").text("Please re-enter");
+                }
+            });
+        });
+        
+    </script>
+</body>
+</html>

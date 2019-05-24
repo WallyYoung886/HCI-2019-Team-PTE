@@ -1,0 +1,157 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="x5-fullscreen" content="true">
+    <title>Findit</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cropper.min.css">
+
+</head>
+<body>
+    <header class="main-header">
+        <section>
+            <a href="index.html" id="back-btn"><</a>
+            <h2 id="nav-title">Photo Search</h2>
+            <button id="next-btn" form="class-form" type="submit"><img src="imgs/check.png" alt="home-page" id="set-btn"></button>
+        </section>
+    </header>
+    <section id="canvas-page" class="main-body">
+        <img src="imgs/placeholder.png" alt="" id="imgDiv">
+        <input type="file" name="imgFile" id="imgFile" accept="image/*" class="inputfile">
+        <label for="imgFile" id="uploadBtn">Choose a file</label> 
+        <p>*Photo needs to be less than 2M in this prototype.</p>
+    </section>
+
+    <section id="confirm-page" class="main-body">
+            <img src="" alt="result-pic" id="result-pic">
+            <img src="imgs/godown.png" alt="godown" id="godown-mark">
+            <section>
+                <form action="result.html" id="class-form" method="GET">
+                    <input type="text" name="type" value="pic" style="display:none;">
+                    <input type="text" placeholder="Add description..." id="search-btn" name="description">
+                    <h4>Add classification</h4>
+                    <section>
+                        <div>
+                            <input type="checkbox" name="class" id="" value="cl">
+                            <p>Clothing & Accessories</p>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="class" id="" value="sh">
+                            <p>Shoes</p>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="class" id="" value="fd">
+                            <p>Food</p>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="class" id="" value="ty">
+                            <p>Toys</p>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="class" id="" value="ec">
+                            <p>Electronics, Computers</p>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="class" id="" value="hm">
+                            <p>Home & Kitchen</p>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="class" id="" value="tr">
+                            <p>Luggage & Travel Gear</p>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="class" id="" value="od">
+                            <p>Sports, Fitness & Outdoors</p>
+                        </div>
+                        <div>
+                            <input type="checkbox" name="class" id="" value="tr">
+                            <p>Cars & Accessories</p>
+                        </div>
+                        <div>
+                            <!--Placeholder, do not delete-->
+                        </div>
+                    </section>
+                </form>
+            </section>
+        </section>
+
+    <script src="js/jquery-3.4.0.min.js"></script>
+    <script src="js/cropper.min.js"></script>
+    <script src="js/jquery-cropper.min.js"></script>
+    <script>
+        let position = 0, 
+            $image = $('#imgDiv'), 
+            temp;
+
+        $(document).ready(function(){
+            $("#confirm-page").hide();
+
+            loadCrop();
+
+            $("#imgFile").change(function(){
+                var reads= new FileReader();
+                f=document.getElementById('imgFile').files[0];
+                reads.readAsDataURL(f);
+                reads.onload=function (e) {
+                    $image.cropper('replace',this.result)
+                };
+                $("#uploadBtn").hide();
+            });
+
+            $(document).scroll(function(){
+                $("#godown-mark").fadeOut(300);
+            });
+
+            $("#next-btn").click(function (e) {
+                if (position === 0) {
+                    e.preventDefault();
+                    temp = $image.cropper('getCroppedCanvas');
+                    let img = temp.toDataURL("image/png");
+                    $("#result-pic").attr("src", img);
+                    localStorage.setItem("photoImg", $("#result-pic").attr("src"));
+                    $("#canvas-page").hide();
+                    $("#confirm-page").show();
+                    $("#nav-title").text("Confirm Page");
+                    position = 1;
+
+                }
+            });
+
+            $("#back-btn").click(function (e) {
+                if (position === 1) {
+                    e.preventDefault();
+                    $("#canvas-page").show();
+                    $("#confirm-page").hide();
+                    $("#nav-title").text("Photo Search");
+                    position = 0;
+                }
+            });
+        });
+
+        //initial the crop function
+        function loadCrop(){
+
+            $image.cropper({
+                aspectRatio: 1 / 1,
+                crop: function(event) {
+                }
+            });
+
+            // Get the Cropper.js instance after initialized
+            var cropper = $image.data('cropper');
+        }
+
+        function flicker(){ 
+            $("#godown-mark").fadeOut(1000).fadeIn(1000); 
+        } 
+    </script>
+    
+</body>
+</html>

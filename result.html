@@ -1,0 +1,222 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="x5-fullscreen" content="true">
+    <title>Foundit - result</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        #title{
+            height: 10%;
+            margin: 5% 0;
+        }
+
+        #title, #decription{
+            border:1px solid grey;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <section>
+            <a href="drawing.html" id="back-btn"><</a>
+            <h2 id="nav-title">Result</h2>
+            <a href="index.html"><img src="imgs/home-white.png" alt="home-page" id="set-btn"></a>
+        </section>
+    </header>
+    <section id="result-page">
+        <h1>Possible results</h1>
+        <h3>Based on your info:</h3>
+        <p></p>
+        <p></p>
+    </section>
+    
+    <section id="detail-page">
+        
+    </section>
+    <section id="post-page" class="main-body">
+        <form action="result.html" id="class-form" method="GET">
+            <input type="text" name="title" id="title" placeholder="Title">
+            <textarea rows="24" cols="40" placeholder="Input content of the post" id="decription"></textarea>
+        </form>
+    </section>
+    <script src="js/jquery-3.4.0.min.js"></script>
+    <script src="js/data.js"></script>
+    <script>
+        let position = 0;
+        let url = window.location.search;
+        let info = url.split("?")[1];
+        info = info.split("&");
+        let type = info.shift();
+        let description = info.shift();
+        description = description.split("=")[1];
+        description = description.split("+").join(" ");
+        let classStr="Classes: ";
+        info.forEach(element => {
+            let cls = element.split("=")[1];
+            classStr += classifyInfo[cls];
+            classStr += ", ";
+        });
+
+        $("#result-page p:nth-child(3)").text("Description: " + description);
+        $("#result-page p:nth-child(4)").text(classStr);
+
+        $(document).ready(function() {
+            $("#detail-page").hide();
+            $("#post-page").hide();
+
+            creatResults();
+
+            $("#help-btn").click(function(){
+                $("#post-page").show();
+                $("#result-page").hide();
+                $("#set-btn").attr("src","imgs/check.png");
+                $("#decription").val(description);
+                $("#nav-title").text("Sent Post");
+                position=1;
+            });
+
+            $("#back-btn").click(function(e){
+                if(position==1){
+                    e.preventDefault();
+                    $("#post-page").hide();
+                    $("#result-page").show();
+                    $("#set-btn").attr("src","imgs/home-white.png");
+                    $("#nav-title").text("Result");
+                    position=0;
+                }
+                else {
+                    e.preventDefault();
+                    if(type=="type=draw"){
+                        window.location.href = "drawing.html";
+                    }
+                    else if(type=="type=pic"){
+                        window.location.href = "imageSearch.html";
+                    }
+                    else {
+                        window.location.href = "text-search.html";
+                    }
+                }
+            });
+
+            $("#set-btn").click(function(e){
+                e.preventDefault();
+                
+                let d = new Date();
+                let newFindings = JSON.parse(localStorage.getItem("founditHistory"));
+                let pic=null;
+                if(type=="type=draw") {
+                    pic = "drawImg";
+                }
+                else if(type=="type=pic") {
+                    pic="photoImg"
+                }
+                
+                if(position==1){  
+                    let newCommudata = JSON.parse(localStorage.getItem("founditData"));
+                    
+                    newCommudata.push(
+                        {
+                            title: $("#title").val(),
+                            description: $("#decription").val(),
+                            source:localStorage.getItem("username"),
+                            time:"1 min",
+                            pic:pic,
+                            comments:[]
+                        }
+                    );
+                    let templink = `post-detail.html?id=${newCommudata.length-1}`;
+                    
+                    newFindings.push(
+                        {
+                            title: $("#title").val(),
+                            date: `${d.getDate()}. ${monthAbbr[d.getMonth()]}`,
+                            pic:pic,
+                            link: newCommudata.length-1
+
+                        }
+                    )
+                    localStorage.setItem("founditData",JSON.stringify(newCommudata));
+                    localStorage.setItem("founditHistory",JSON.stringify(newFindings));
+                    localStorage.setItem("posted",true);
+                    window.location.href=templink;
+                }
+                else {
+                    newFindings.push(
+                        {
+                            title: "Auto Recognition",
+                            date: `${d.getDate()}. ${monthAbbr[d.getMonth()]}` ,
+                            pic:pic,
+                            link: false
+                        }
+                    );
+                    localStorage.setItem("founditHistory",JSON.stringify(newFindings));
+                    window.location.href="index.html";
+                }
+            })
+        });
+
+        function creatResults(){
+            /*
+            <section>
+                <img src="imgs/recognition/b1.jpg" alt="">
+                <div>
+                    <h4>Hair dryer</h4>
+                    <p>Price: $45</p>
+                    <p>Shop may sale: K Mart</p>
+                </div>
+            </section>
+            */
+            let result=document.getElementById("result-page") ,
+                data;
+            if(type=="type=draw"){
+                data=drawResult;
+            } 
+            else if(type=="type=pic"){
+                data=photoResult;
+            }
+            else{
+                data=textResult;
+            }
+            data.forEach(item => {
+                let resultSec = document.createElement("section");
+                let pic = document.createElement("img");
+                let div = document.createElement("div");
+                let title = document.createElement("h4");
+                let price = document.createElement("p");
+                let shop = document.createElement("p");
+                pic.src=item.pic;
+                title.innerHTML = item.title;
+                price.innerHTML = item.price;
+                shop.innerHTML = item.shop;
+                div.appendChild(title);
+                div.appendChild(price);
+                div.appendChild(shop);
+                resultSec.appendChild(pic);
+                resultSec.appendChild(div);
+                result.appendChild(resultSec);
+            });
+
+            let btnSec = document.createElement("section");
+            let btn = document.createElement("button");
+            let line1 = document.createElement("p");
+            let line2 = document.createElement("p");
+            line1.innerHTML = "Not what you want?";
+            line2.innerHTML = "Click me for help";
+            btn.setAttribute("id","help-btn");
+            btn.appendChild(line1);
+            btn.appendChild(line2);
+            btn.className = "unpost";
+            btnSec.appendChild(btn);
+            result.appendChild(btnSec);
+        }
+    </script>
+</body>
+</html>

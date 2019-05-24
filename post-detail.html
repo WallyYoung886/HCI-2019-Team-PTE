@@ -1,0 +1,175 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="x5-fullscreen" content="true">
+    <title>Foundit-details</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <section>
+            <a href="index.html" id="back-btn"><</a>
+            <h2 id="nav-title">Post</h2>
+            <a href="index.html"><img src="imgs/home-white.png" alt="home-page" id="set-btn"></a>
+        </section>
+    </header>
+    <section class="main-body">
+        <section id="poster-head">
+            <section class="comm-head">
+                <img src="imgs/avatar.png" alt="avatar">
+                <p id="user-name"></p>
+                <p id="post-time">3h</p>
+            </section>
+            <section>
+                <button id="menu-btn">...</button>
+                <div class="float-noti" id="menu">
+                    <div>
+                        <p>Delete</p>
+                    </div>
+                    <div>
+                        <p>Edit</p>
+                    </div>
+                    <div>
+                        <p>Report</p>
+                    </div>
+                </div>
+            </section>
+        </section>
+        <article id="post">
+
+        </article>
+        <section id="com-sec">
+            <h3>Comments</h3>
+            <section id="comments"></section>
+        </section>
+        <div class="blank"></div>
+    </section>
+    <footer class="nav">
+        <form action="" id="com-form">
+            <input type="text" id="comment-content">
+            <button id="comment-btn">Send</button>
+        </form>
+    </footer>
+</body>
+<script src="js/jquery-3.4.0.min.js"></script>
+<script src="js/data.js"></script>
+<script>
+    let url = window.location.search;
+    let postId = parseInt(url.split("=")[1]);
+
+    let newCommudata = JSON.parse(localStorage.getItem("founditData"));
+    let thisPost = newCommudata[postId];
+    
+    $(document).ready(function() {
+
+        $("#menu").hide();
+
+        let post = document.getElementById("post");
+        let comments = document.getElementById("comments");
+
+        if(thisPost.source==localStorage.getItem("username")){
+            localStorage.setItem("visited",true);
+        } 
+
+        //creating post
+        $("#post-title").text(thisPost.title);
+
+        $("#user-name").text(thisPost.source);
+
+        $("#post-time").text(thisPost.time);
+
+        let postP = document.createElement("p");
+        postP.innerHTML = thisPost.description;
+        post.appendChild(postP);
+
+        if(thisPost.pic) {
+            let picData = thisPost.pic;
+            let pic = document.createElement("img");
+            if(picData=="photoImg"){
+                pic.src = localStorage.getItem("photoImg");
+            }
+            else if(picData == "drawImg"){
+                pic.src = localStorage.getItem("drawImg");
+            }
+            else {
+                pic.src = picData;
+            }
+            post.appendChild(pic);
+        }
+
+        //creating comments
+        thisPost.comments.forEach(element => {
+            let commentSec = createComment(element);
+            comments.appendChild(commentSec);
+        });
+
+        $("#comment-btn").click(function(e){
+            e.preventDefault();
+            let commentVal = $("#comment-content").val();
+            if(commentVal!=""){
+                let commentObj = {
+                poster: localStorage.getItem("username"),
+                time:"1 minute",
+                content: commentVal,
+                };
+                newCommudata[postId].comments.push(commentObj);
+                localStorage.setItem("founditData",JSON.stringify(newCommudata));
+                let commentSec = createComment(commentObj);
+                comments.appendChild(commentSec);
+                
+                let d = new Date();
+                let newComments = JSON.parse(localStorage.getItem("founditComment"));
+                let histComObj = {
+                    title: commentVal,
+                    date:`${d.getDate()}. ${monthAbbr[d.getMonth()]}`,
+                    pic:"imgs/ball.png",
+                    link: 'post-detail.html?id=9'
+                }
+                newComments.push(histComObj);
+                localStorage.setItem("founditComment",JSON.stringify(newComments));
+                $("#comment-content").val("");
+            }
+            
+        });
+
+        $("#menu-btn").click(function(){
+            $("#menu").toggle();
+            $("#menu").css("right","1%");
+        });
+
+    });
+
+    function createComment(element) {
+        let commentSec = document.createElement("section");
+        let poster = element.poster;
+        let time = element.time;
+        let content = element.content;
+
+        let head = document.createElement("div");
+        head.className = "comm-head";
+        let ava = document.createElement("img");
+        ava.src = "imgs/avatar.png";
+        let posterP = document.createElement("p");
+        posterP.innerHTML = poster;
+        let timeP = document.createElement("p");
+        timeP.innerHTML = time;
+        head.appendChild(ava); 
+        head.appendChild(posterP);
+        head.appendChild(timeP);
+        let contentP = document.createElement("p");
+        contentP.innerHTML = content;
+        
+        commentSec.appendChild(head);
+        commentSec.appendChild(contentP);
+        return commentSec;
+    }
+
+</script>
+</html>

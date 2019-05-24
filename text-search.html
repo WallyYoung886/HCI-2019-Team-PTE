@@ -1,0 +1,84 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="x5-fullscreen" content="true">
+    <title>Foundit</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <section>
+            <a href="index.html" id="back-btn"><</a>
+            <h2 id="nav-title">Text Search</h2>
+            <button id="next-btn" form="class-form" type="submit"><img src="imgs/check.png" alt="home-page" id="set-btn"></button>
+        </section>
+    </header>
+
+    <section id="confirm-page" class="main-body">
+        <form action="result.html" id="class-form">
+            <input type="text" name="type" value="text" style="display:none;">
+            <input type="text" placeholder="Input your description" id="search-btn" name="description">
+            <h4>Add classification</h4>
+            <section>
+                <div>
+                    <input type="checkbox" name="class" id="" value="cl">
+                    <p>Clothing & Accessories</p>
+                </div>
+                <div>
+                    <input type="checkbox" name="class" id="" value="sh">
+                    <p>Shoes</p>
+                </div>
+                <div>
+                    <input type="checkbox" name="class" id="" value="fd">
+                    <p>Food</p>
+                </div>
+                <div>
+                    <input type="checkbox" name="class" id="" value="ty">
+                    <p>Toys</p>
+                </div>
+                <div>
+                    <input type="checkbox" name="class" id="" value="ec">
+                    <p>Electronics, Computers</p>
+                </div>
+                <div>
+                    <input type="checkbox" name="class" id="" value="hm">
+                    <p>Home & Kitchen</p>
+                </div>
+                <div>
+                    <input type="checkbox" name="class" id="" value="tr">
+                    <p>Luggage & Travel Gear</p>
+                </div>
+                <div>
+                    <input type="checkbox" name="class" id="" value="od">
+                    <p>Sports, Fitness & Outdoors</p>
+                </div>
+                <div>
+                    <input type="checkbox" name="class" id="" value="tr">
+                    <p>Cars & Accessories</p>
+                </div>
+                <div>
+                    <!--Placeholder, do not delete-->
+                </div>
+            </section>
+        </form>
+    </section>
+    <script src="js/jquery-3.4.0.min.js"></script>
+    <script>
+        $("#next-btn").click(function(e){
+            if($("#search-btn").val()==""){
+                e.preventDefault();
+                $("#search-btn").attr("placeholder","please enter something!");
+                $("#search-btn").css("border-color","coral")
+            }
+        });
+    </script>
+</body>
+</html>

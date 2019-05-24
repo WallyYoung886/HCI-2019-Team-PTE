@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="x5-fullscreen" content="true">
+    <title>Foundit! - settings</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="main-header">
+            <section>
+                <a href="index.html"><</a>
+                <h2 id="nav-title">Settings</h2>
+                <p> </p>
+            </section>
+    </header>
+    <main id="settings" class="active">
+        <section class="seprate">
+            <h4>Profile Photo</h4>
+            <img src="imgs/avatar.png" alt="avatar" id="avatar">
+        </section>
+        <section>
+            <h4>Name</h4>
+            <p id="username">PTE</p>
+        </section>
+        <section>
+            <h4>Skill field</h4>
+            <p id="skill">Design Thinking</p>
+        </section>
+        <section>
+            <h4>General</h4>
+            <p>-></p>
+        </section>
+        <section>
+            <h4>Message Notification</h4>
+            <p>-></p>
+        </section>
+        <section>
+            <h4>Help &Feedback</h4>
+            <p>-></p>
+        </section>
+        <section class="seprate" id="about">
+            <h4>About</h4>
+            <p>Version 0.3.0 -></p>
+        </section>
+        <section class="seprate" id="logout-btn">
+            <h4>Log Out</h4>
+            <img src="imgs/logout.png" alt="logout" id="logout">
+        </section>
+    </main>
+    <script src="js/jquery-3.4.0.min.js"></script>
+    <script>
+        $("#username").text(localStorage.getItem("username"));
+        $("#skill").text(localStorage.getItem("skill"));
+
+        $(document).ready(function(){
+            $("#about").click(function(){
+                alert("Team PTE\nMember:\n    Sicheng Yang\n    Menghao Huang\n    Yiheng Zhang\n    Shane Wei\n21/05/2019");
+            });
+            $("#logout-btn").click(function(){
+                alert("You have complete the tasks");
+                window.location.href="login.html";
+            });
+        })
+        
+    </script>
+</body>
+</html>
