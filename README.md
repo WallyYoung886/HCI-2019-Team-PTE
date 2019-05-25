@@ -8,7 +8,7 @@ A hign fidelity prototype for Human Computer Interaction Report 3
 
 
 <h3>3rd party plugins</h3>
-<p>The app uses <a href="http://jquery.com/">jQuery</a> as the main plugin. Drawing and cropping features use third-party plugins, drawing uses 2 plugin, including <a href="https://github.com/Leimi/drawingboard.js">drawingboard.js</a> and <a href="https://github.com/mattjmattj/simple-undo">Simple-undo</a> and crop function use plugin <a href="https://github.com/fengyuanchen/jquery-cropper">jquery-cropper</a> and <a href="https://github.com/fengyuanchen/cropperjs">cropper</a></p>.
+<p>The app uses <a href="http://jquery.com/">jQuery</a> as the main plugin. Drawing and cropping features use third-party plugins, drawing uses 2 plugin, including <a href="https://github.com/Leimi/drawingboard.js">drawingboard.js</a> and <a href="https://github.com/mattjmattj/simple-undo">Simple-undo</a> and crop function use plugin <a href="https://github.com/fengyuanchen/jquery-cropper">jquery-cropper</a> and <a href="https://github.com/fengyuanchen/cropperjs">cropper</a>.</p>
 
 
 
